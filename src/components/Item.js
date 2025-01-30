@@ -1,9 +1,9 @@
-import { Card, Col, Image, Stack } from "react-bootstrap"
+import { Card, Col, Image, Row, Stack } from "react-bootstrap"
 
 export default function Item({ instance }) {
     return (
         <>
-            <Col sm={12}>
+            <Col xs={12}>
                 <Card border="light" className="shadow-lg">
                     <Card.Body>
                         <Stack direction="horizontal" gap={3} className="justify-content-between">
@@ -11,8 +11,11 @@ export default function Item({ instance }) {
                                 <Image src={instance.image} alt={instance.name} rounded fluid />
                             </div>
                             <Stack direction="vertical" className="justify-content-around">
-                                <h5 className="mb-0 fw-light fs-6">{instance.name}</h5>
-                                <h5 className="mb-0 fw-bold fs-6">R$ {instance.price}</h5>
+                                <h5 className="mb-0 small fw-bold">{instance.name}</h5>
+                                <span className="d-inline-block text-truncate small" style={{ width: '150px' }}>
+                                    {instance.description}
+                                </span>
+                                <span className="mb-0 small">A partir de R${instance.price}</span>
                             </Stack>
                         </Stack>
                     </Card.Body>

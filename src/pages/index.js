@@ -2,23 +2,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Accordion, Container } from 'react-bootstrap';
 
+import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Item from '@/components/Item';
 
-const ITEMS = [
-    { id: 1, name: "Aliqua Ut", price: 234.56, image: "https://placehold.co/100" },
-    { id: 2, name: "Lorem Ipsum", price: 1234.56, image: "https://placehold.co/100" },
-    { id: 3, name: "Dolor Sit", price: 789.01, image: "https://placehold.co/100" },
-    { id: 4, name: "Amet Consectetur", price: 2345.67, image: "https://placehold.co/100" },
-    { id: 5, name: "Adipiscing Elit", price: 890.12, image: "https://placehold.co/100" }
-]
+import { ITEMS } from '@/fixtures/items';
 
 export default function Index() {
     return (
         <>
             <Header />
             <Container fluid>
-                <Accordion defaultActiveKey={['0']} alwaysOpen className='shadow-sm'>
+                <Accordion defaultActiveKey={['0']} alwaysOpen className='shadow-sm mb-3'>
                     <Accordion.Item eventKey="0">
                         <Accordion.Header className='sticky shadow z-3'>Header Ipsum 0</Accordion.Header>
                         <Accordion.Body>
@@ -61,6 +56,7 @@ export default function Index() {
                     </Accordion.Item>
                 </Accordion>
             </Container>
+            <Footer />
         </>
     );
 }
