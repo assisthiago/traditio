@@ -1,30 +1,61 @@
-import { Button, Container, Navbar, Stack } from "react-bootstrap"
-import { GeoAltFill, PersonFill } from "react-bootstrap-icons"
+import { useState } from "react";
+import { Badge, Button, Container, Navbar, Stack } from "react-bootstrap"
+import { GeoAlt, GeoAltFill, Person, PersonFill } from "react-bootstrap-icons"
+
+import Account from "./Account";
 
 export default function Header() {
+    const logged = false;
+
+    const [showAccount, setShowAccount] = useState(false);
+
     return (
         <>
             <Stack className="bg-primary-subtle text-primary-emphasis p-3">
                 <h1 className="display-5 text-center m-0">Logo Ipsum</h1>
                 <Button variant="link" size="sm" className="text-decoration-none">@social.ipsum</Button>
+                {!logged
+                    ? (<Badge bg="danger" className="d-block mx-auto">Fechada</Badge>)
+                    : (<Badge bg="success" className="d-block mx-auto">Aberta</Badge>)
+                }
             </Stack>
             <Navbar sticky="top" className="bg-white py-3 mb-3 shadow-lg">
                 <Container fluid className="flex-column">
                     <Stack direction="horizontal" className="justify-content-between">
-                        <Button
-                            variant="link"
-                            size="sm"
-                            className="d-flex align-items-center text-decoration-none"
-                        >
-                            <GeoAltFill size={15} />
-                            <span className="ms-1 fw-light">Lorem Ipsum Dolor Sit Amet, 9999</span>
-                        </Button>
-                        <Button variant="link" size="sm">
-                            <PersonFill size={20} />
-                        </Button>
+                        {!logged ? (
+                            <>
+                                <Button
+                                    variant="link"
+                                    size="sm"
+                                    className="d-flex align-items-center text-decoration-none"
+                                >
+                                    <GeoAlt size={15} />
+                                    <span className="ms-1 fw-light">Encontre seu endereço</span>
+                                </Button>
+                                <Button variant="link" size="sm" onClick={() => setShowAccount(true)}>
+                                    <Person size={20} />
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button
+                                    variant="link"
+                                    size="sm"
+                                    className="d-flex align-items-center text-decoration-none"
+                                >
+                                    <GeoAltFill size={15} />
+                                    <span className="ms-1 fw-light">Lorem Ipsum Dolor Sit Amet, 9999</span>
+                                </Button>
+                                <Button variant="link" size="sm" onClick={() => setShowAccount(true)}>
+                                    <PersonFill size={20} />
+                                </Button>
+                            </>
+                        )}
                     </Stack>
                 </Container>
             </Navbar>
+
+            <Account show={showAccount} setShow={setShowAccount} />
         </>
     )
 }
