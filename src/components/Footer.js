@@ -20,29 +20,29 @@ export default function Footer() {
                             <small className="d-block fs-small text-black">Início</small>
                         </Button>
                     </Link>
-                    <Link href="/orders">
-                        <Button
-                            variant="link"
-                            size="sm"
-                            className="text-decoration-none"
-                            disabled={!logged}
-                        >
+                    <Button
+                        variant="link"
+                        size="sm"
+                        className="text-decoration-none"
+                        disabled={!logged}
+                    >
+                        <Link href="/orders" className="text-decoration-none">
                             <Clipboard2Fill size={20} className="mb-1" />
                             <small className="d-block fs-small text-black">Pedidos</small>
-                        </Button>
-                    </Link>
-                    <Link href="/orders">
-                        <Button
-                            variant="link"
-                            size="sm"
-                            className="text-decoration-none"
-                            disabled={!logged}
-                        >
+                        </Link>
+                    </Button>
+                    <Button
+                        variant="link"
+                        size="sm"
+                        className="text-decoration-none"
+                        disabled={!logged}
+                    >
+                        <Link href="/orders" className="text-decoration-none">
                             <Bag size={20} className="mb-1" />
                             {/* <BagFill size={20} className="mb-1" /> */}
                             <small className="d-block fs-small text-black">Carrinho</small>
-                        </Button>
-                    </Link>
+                        </Link>
+                    </Button>
                     <Link href="/orders">
                         <Button
                             variant="link"

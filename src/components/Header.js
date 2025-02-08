@@ -3,11 +3,13 @@ import { Badge, Button, Container, Navbar, Stack } from "react-bootstrap"
 import { GeoAlt, GeoAltFill, Person, PersonFill } from "react-bootstrap-icons"
 
 import Account from "./Account";
+import Address from "./Address";
 
 export default function Header() {
     const logged = false;
 
     const [showAccount, setShowAccount] = useState(false);
+    const [showAddress, setShowAddress] = useState(false);
 
     return (
         <>
@@ -28,6 +30,7 @@ export default function Header() {
                                     variant="link"
                                     size="sm"
                                     className="d-flex align-items-center text-decoration-none"
+                                    onClick={() => setShowAddress(true)}
                                 >
                                     <GeoAlt size={15} />
                                     <span className="ms-1 fw-light">Encontre seu endereço</span>
@@ -42,6 +45,7 @@ export default function Header() {
                                     variant="link"
                                     size="sm"
                                     className="d-flex align-items-center text-decoration-none"
+                                    onClick={() => setShowAddress(true)}
                                 >
                                     <GeoAltFill size={15} />
                                     <span className="ms-1 fw-light">Lorem Ipsum Dolor Sit Amet, 9999</span>
@@ -56,6 +60,7 @@ export default function Header() {
             </Navbar>
 
             <Account show={showAccount} setShow={setShowAccount} />
+            <Address show={showAddress} setShow={setShowAddress} />
         </>
     )
 }
