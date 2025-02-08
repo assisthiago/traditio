@@ -5,18 +5,18 @@ import { GeoAlt, GeoAltFill, Person, PersonFill } from "react-bootstrap-icons"
 import Account from "./Account";
 import Address from "./Address";
 
-export default function Header() {
-    const logged = false;
+export default function Header({ logged = false }) {
+    const opened = true;
 
     const [showAccount, setShowAccount] = useState(false);
     const [showAddress, setShowAddress] = useState(false);
 
     return (
         <>
-            <Stack className="bg-primary-subtle text-primary-emphasis p-3">
+            <Stack className="bg-primary-subtle bg-gradient text-primary-emphasis p-3">
                 <h1 className="display-5 text-center m-0">Logo Ipsum</h1>
                 <Button variant="link" size="sm" className="text-decoration-none">@social.ipsum</Button>
-                {!logged
+                {!opened
                     ? (<Badge bg="danger" className="d-block mx-auto">Fechada</Badge>)
                     : (<Badge bg="success" className="d-block mx-auto">Aberta</Badge>)
                 }
