@@ -1,8 +1,8 @@
 import Link from "next/link";
 const { Navbar, Container, Stack, Button } = require("react-bootstrap");
-import { BagFill, HouseFill, InfoCircleFill, Clipboard2Fill, Bag } from "react-bootstrap-icons";
+import { BagFill, InfoCircleFill, Clipboard2Fill, Bag, CollectionFill } from "react-bootstrap-icons";
 
-export default function Footer({ logged = false, currentPage = "home" }) {
+export default function Footer({ logged = false, currentPage = "products" }) {
 
     return (
         <Navbar fixed="bottom" className="bg-white flex-column py-0 shadow-lg">
@@ -12,11 +12,11 @@ export default function Footer({ logged = false, currentPage = "home" }) {
                         variant="link"
                         size="sm"
                         className="text-decoration-none"
-                        active={currentPage === 'home'}
+                        active={currentPage === 'products'}
                     >
                         <Link href="/" className="text-decoration-none">
-                            <HouseFill size={20} className="mb-1" />
-                            <small className="d-block fs-small text-black">Início</small>
+                            <CollectionFill size={20} className="mb-1" />
+                            <small className="d-block fs-small text-black">Produtos</small>
                         </Link>
                     </Button>
                     <Button

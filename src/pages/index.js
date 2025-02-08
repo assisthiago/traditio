@@ -9,7 +9,7 @@ export default function Index() {
     const logged = true;
 
     return (
-        <Layout logged={logged} currentPage="home">
+        <Layout logged={logged} currentPage="products">
             <Container fluid>
                 <Accordion defaultActiveKey={['0']} alwaysOpen className='shadow-sm mb-3'>
                     <Accordion.Item eventKey="0">
