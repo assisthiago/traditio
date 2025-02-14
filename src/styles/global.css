@@ -25,3 +25,7 @@ p.text-ellipsis {
 p.text-ellipsis::after {
     content: '...';
 }
+
+.vh-75 {
+    height: 75vh !important;
+}

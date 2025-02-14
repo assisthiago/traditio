@@ -8,7 +8,7 @@ export default function Settings({ show, setShow }) {
     return (
         <>
             <Offcanvas show={show} onHide={() => setShow(false)} placement="end">
-                <Offcanvas.Header closeButton>
+                <Offcanvas.Header closeButton className="shadow-sm">
                     <Offcanvas.Title className="text-uppercase">Minha conta</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>

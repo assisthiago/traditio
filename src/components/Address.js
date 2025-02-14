@@ -3,8 +3,8 @@ import { GeoAltFill } from "react-bootstrap-icons";
 
 export default function Address({ show, setShow }) {
     return (
-        <Offcanvas show={show} onHide={() => setShow(false)} placement="bottom">
-            <Offcanvas.Header closeButton>
+        <Offcanvas show={show} onHide={() => setShow(false)} placement="start">
+            <Offcanvas.Header closeButton className="shadow-sm">
                 <Offcanvas.Title className="text-uppercase">Endereço</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
