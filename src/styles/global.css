@@ -29,3 +29,11 @@ p.text-ellipsis::after {
 .vh-75 {
     height: 75vh !important;
 }
+
+.end-50px {
+    right: 50px !important;
+}
+
+.w-90px {
+    width: 90px !important;
+}

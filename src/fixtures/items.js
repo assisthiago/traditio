@@ -35,3 +35,5 @@ export const ITEMS = [
         "image": "https://placehold.co/100"
     }
 ]
+
+export const PRODUCT_ADDITIONAL = []

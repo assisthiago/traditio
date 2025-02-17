@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 import Layout from '@/components/Layout';
 import Categories from '@/components/Categories';
 
-import { CATEGORIES } from '@/fixtures/categories';
+import { CATEGORIES_PRODUCTS } from '@/fixtures/categories';
 
 export default function Index() {
     const logged = true;
@@ -11,7 +11,7 @@ export default function Index() {
     return (
         <Layout logged={logged} currentPage="products">
             <Container fluid>
-                <Categories categories={CATEGORIES} />
+                <Categories categories={CATEGORIES_PRODUCTS} type="products" />
             </Container>
         </Layout>
     );

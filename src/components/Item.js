@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Card, Col, Image, Row, Stack } from "react-bootstrap"
+import { Card, Col, Image, Stack } from "react-bootstrap"
 
 export default function Item({ instance }) {
     return (
