@@ -1,5 +1,5 @@
 import { Button, Col, FloatingLabel, Form, Offcanvas, Row } from "react-bootstrap";
-import { GeoAltFill } from "react-bootstrap-icons";
+import { GeoAltFill, Search } from "react-bootstrap-icons";
 
 export default function Address({ show, setShow }) {
     return (
@@ -16,7 +16,9 @@ export default function Address({ show, setShow }) {
                             </FloatingLabel>
                         </Col>
                         <Col xs={4}>
-                            <Button variant="primary" className="w-100 h-100 shadow-sm" type="submit">Buscar</Button>
+                            <Button variant="primary" className="w-100 h-100 shadow-sm" type="submit">
+                                <Search size={25} />
+                            </Button>
                         </Col>
                     </Row>
                 </Form>

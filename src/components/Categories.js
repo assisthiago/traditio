@@ -1,20 +1,22 @@
 import { Accordion, Badge, Stack } from "react-bootstrap";
 
-import Item from "./Item";
 import Additional from "./Additional";
+import Product from "./Product";
 
-export default function Categories({ categories, type }) {
+export default function Categories({ categories, module }) {
   return (
     <>
-      {type === 'products' && (
-        <Accordion defaultActiveKey={[0, 1]} alwaysOpen className='shadow-sm mb-3'>
+      {module === 'index' && (
+        <Accordion defaultActiveKey={
+          categories.map(category => { if (category.show) return category.id })
+        } alwaysOpen className='shadow-sm mb-3'>
           {categories.map((category, i) => (
-            <Accordion.Item eventKey={i} key={i}>
-              <Accordion.Header className='bg-gradient sticky shadow z-3'>{category.name}</Accordion.Header>
+            <Accordion.Item eventKey={category.id} key={i}>
+              <Accordion.Header className='bg-gradient sticky shadow z-3'>{category.title}</Accordion.Header>
               <Accordion.Body>
-                {category.items.map((instance, j, row) => (
+                {category.products.map((product, j, row) => (
                   <div key={j} className={'mb-' + (j === row.length - 1 ? '0' : '3')}>
-                    <Item instance={instance} />
+                    <Product instance={product} />
                   </div>
                 ))}
               </Accordion.Body>
@@ -23,10 +25,12 @@ export default function Categories({ categories, type }) {
         </Accordion>
       )}
 
-      {type === 'product' && (
-        <Accordion defaultActiveKey={[0, 1]} alwaysOpen className='shadow-sm mb-3'>
+      {module === 'detail' && (
+        <Accordion defaultActiveKey={
+          categories.map(category => { if (category.show) return category.id })
+        } alwaysOpen className='shadow-sm mb-3'>
           {categories.map((category, i) => (
-            <Accordion.Item eventKey={i} key={i}>
+            <Accordion.Item eventKey={category.id} key={i}>
               <Accordion.Header className='bg-gradient sticky shadow z-3'>
                 <Stack direction="horizontal" gap={3} className="justify-content-between">
                   <Stack direction='vertical' gap={0}>
@@ -52,9 +56,9 @@ export default function Categories({ categories, type }) {
                 </Stack>
               </Accordion.Header>
               <Accordion.Body>
-                {category.items.map((item, j, row) => (
+                {category.additionals.map((additional, j, row) => (
                   <div key={j} className={'mb-' + (j === row.length - 1 ? '0' : '3')}>
-                    <Additional instance={item} type={category.type} />
+                    <Additional instance={additional} type={category.type} />
                   </div>
                 ))}
               </Accordion.Body>

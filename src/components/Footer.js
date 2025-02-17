@@ -2,7 +2,7 @@ import Link from "next/link";
 const { Navbar, Container, Stack, Button } = require("react-bootstrap");
 import { BagFill, InfoCircleFill, Clipboard2Fill, Bag, CollectionFill } from "react-bootstrap-icons";
 
-export default function Footer({ logged = false, currentPage = "products" }) {
+export default function Footer({ logged = false, currentPage = "products", productsInCart = 0 }) {
 
     return (
         <Navbar fixed="bottom" className="bg-white flex-column py-0 shadow-lg">
@@ -35,12 +35,15 @@ export default function Footer({ logged = false, currentPage = "products" }) {
                         variant="link"
                         size="sm"
                         className="text-decoration-none"
-                        active={currentPage === 'chart'}
+                        active={currentPage === 'cart'}
                         disabled={!logged}
                     >
-                        <Link href="/chart" className="text-decoration-none">
-                            <Bag size={20} className="mb-1" />
-                            {/* <BagFill size={20} className="mb-1" /> */}
+                        <Link href="/cart" className="text-decoration-none">
+                            {productsInCart == 0 ? (
+                                <Bag size={20} className="mb-1" />
+                            ) : (
+                                <BagFill size={20} className="mb-1" />
+                            )}
                             <small className="d-block fs-small text-black">Carrinho</small>
                         </Link>
                     </Button>
