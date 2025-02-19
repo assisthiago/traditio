@@ -310,3 +310,31 @@ export const ORDERS = [
     ]
   }
 ];
+
+export const CART = {
+  "products": [
+    {
+      ...ITEM,
+      "quantity": 1,
+      "total": 9999.99,
+      "additionals": [
+        {
+          ...ADDITIONAL,
+          "quantity": 1,
+          "price": 9999.99,
+        },
+        {
+          ...ADDITIONAL,
+          "quantity": 1,
+          "price": 9999.99,
+        },
+        {
+          ...ADDITIONAL,
+          "quantity": 1,
+          "price": 9999.99,
+        },
+      ]
+    }
+  ],
+  "total": 9999.99,
+}
