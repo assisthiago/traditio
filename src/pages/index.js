@@ -8,8 +8,6 @@ import { CATEGORIES_PRODUCTS } from '@/fixtures/models';
 export default function Index() {
   const logged = true;
 
-  console.log(CATEGORIES_PRODUCTS);
-
   return (
     <Layout logged={logged} currentPage="products">
       <Container fluid>

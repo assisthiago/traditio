@@ -7,10 +7,12 @@ import Categories from "@/components/Categories";
 import { PRODUCTS } from '@/fixtures/models';
 
 export default function Product() {
+  const logged = true;
+
   const router = useRouter();
   const { id } = router.query;
+
   const instance = PRODUCTS[0];
-  const logged = true;
 
   return (
     <Layout logged={logged} currentPage="products">

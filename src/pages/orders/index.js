@@ -1,12 +1,15 @@
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Badge, Button, Card, Container, Offcanvas, Stack } from "react-bootstrap";
 
 import Layout from "@/components/Layout";
+import OrderDetail from "@/components/OrderDetail";
 
 import { ORDERS } from "@/fixtures/models";
 
 export default function Orders() {
   const logged = true;
+  const router = useRouter();
 
   const [show, setShow] = useState(false);
   const [order, setOrder] = useState(null);
@@ -69,11 +72,23 @@ export default function Orders() {
                 <Card.Text className="mb-0">Para <span className="fw-medium">João Sem Braço</span>.</Card.Text>
               </Card.Body>
               <Card.Body className="pt-0">
-                <Button
-                  variant={order?.status === "cancelado" ? "outline-danger" : "outline-primary"}
-                  size="sm"
-                  className="me-2 shadow"
-                  onClick={() => handleOrder(order)}>Ver pedido</Button>
+                {['cancelado', 'finalizado'].includes(order?.status) ? (
+                  <Button
+                    variant={order?.status === "cancelado" ? "outline-danger" : "outline-primary"}
+                    size="sm"
+                    className="me-2"
+                    onClick={() => handleOrder(order)}>
+                    Ver pedido
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="me-2 shadow"
+                    onClick={() => router.push(`/orders/${order.id}`)}>
+                    Acompanhar pedido
+                  </Button>
+                )}
               </Card.Body>
               <Card.Footer className={order?.status === "cancelado" ? "text-decoration-line-through" : ""}>{order.updated_at}</Card.Footer>
             </Card>
@@ -87,43 +102,7 @@ export default function Orders() {
           <Badge bg={setStatus(order?.status)} className="text-capitalize">{order?.status}</Badge>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <Container
-            fluid
-            className={"bg-body-tertiary p-3 font-monospace small shadow-lg rounded " + (order?.status === "cancelado" ? "text-decoration-line-through" : "")}
-          >
-            <p className="mb-0">Pedido em {order?.created_at}.</p>
-            <p className="mb-0">Entregue em {order?.updated_at}.</p>
-            <p className="mb-0">No endereço {order?.address}.</p>
-            <p className="mb-0">Pagamento via {setPaymentMethod(order?.payment_method)}.</p>
-            <hr />
-            <Stack direction="verital" gap={1}>
-              {order?.products.map((product, j, row) => (
-                <div key={j} className={'mb-' + (j === row.length - 1 ? '0' : '3')}>
-                  <Stack direction="horizontal" gap={3} className="justify-content-between align-items-start mb-2 fw-bold">
-                    <p className="mb-0">{product?.quantity}x {product?.name}</p>
-                    <p className="mb-0">R${product?.price}</p>
-                  </Stack>
-                  {product?.additionals.map((additional, k) => (
-                    <Stack direction="horizontal" gap={3} className="ms-3 justify-content-between align-items-start" key={k}>
-                      <p className="mb-0">{additional.quantity}x {additional.name}</p>
-                      <p className="mb-0">R${product?.price}</p>
-                    </Stack>
-                  ))}
-                </div>
-              ))}
-            </Stack>
-            <hr />
-            <p>Observação: {order?.observation}.</p>
-            <hr />
-            <Stack direction="horizontal" gap={3} className="justify-content-between">
-              <p className="mb-0">Entrega</p>
-              <p className="mb-0">R${order?.delivery_cost}</p>
-            </Stack>
-            <Stack direction="horizontal" gap={3} className="justify-content-between">
-              <p className="mb-0">Total</p>
-              <p className="mb-0">R${order?.total}</p>
-            </Stack>
-          </Container>
+          <OrderDetail order={order} />
         </Offcanvas.Body>
       </Offcanvas>
     </>

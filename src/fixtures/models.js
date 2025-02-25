@@ -68,6 +68,8 @@ export const ORDERS = [
     "delivery": true,
     "delivery_cost": 9999.99,
     "total": 9999.99,
+    "delivery_forecast": "01/01/2000 00:00",
+    "delivered_at": null,
     "created_at": "01/01/2000 00:00",
     "updated_at": "01/01/2000 00:00",
     "products": [
@@ -118,6 +120,8 @@ export const ORDERS = [
     "delivery": true,
     "delivery_cost": 9999.99,
     "total": 9999.99,
+    "delivery_forecast": "01/01/2000 00:00",
+    "delivered_at": null,
     "created_at": "01/01/2000 00:00",
     "updated_at": "01/01/2000 00:00",
     "products": [
@@ -168,6 +172,8 @@ export const ORDERS = [
     "delivery": true,
     "delivery_cost": 9999.99,
     "total": 9999.99,
+    "delivery_forecast": "01/01/2000 00:00",
+    "delivered_at": null,
     "created_at": "01/01/2000 00:00",
     "updated_at": "01/01/2000 00:00",
     "products": [
@@ -218,6 +224,8 @@ export const ORDERS = [
     "delivery": true,
     "delivery_cost": 9999.99,
     "total": 9999.99,
+    "delivery_forecast": "01/01/2000 00:00",
+    "delivered_at": "01/01/2000 00:00",
     "created_at": "01/01/2000 00:00",
     "updated_at": "01/01/2000 00:00",
     "products": [
@@ -268,6 +276,8 @@ export const ORDERS = [
     "delivery": true,
     "delivery_cost": 9999.99,
     "total": 9999.99,
+    "delivery_forecast": "01/01/2000 00:00",
+    "delivered_at": null,
     "created_at": "01/01/2000 00:00",
     "updated_at": "01/01/2000 00:00",
     "products": [

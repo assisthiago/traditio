@@ -1,21 +1,30 @@
-import { Container, Card, Stack, Button, Form, InputGroup, Offcanvas, FloatingLabel } from "react-bootstrap";
+'use client';
+
+import { Container, Card, Stack, Button, Form, InputGroup, Offcanvas, FloatingLabel, Tabs, Tab } from "react-bootstrap";
 
 import Layout from "@/components/Layout";
 
 import { CART } from "@/fixtures/models";
 import { useState } from "react";
 import { TicketPerforatedFill } from "react-bootstrap-icons";
+import { useRouter } from "next/navigation";
 
 export default function Cart() {
   const logged = true;
+  const router = useRouter()
 
   const [showRemoveOffcanvas, setShowRemoveOffcanvas] = useState(false);
   const [showCouponOffcanvas, setShowCouponOffcanvas] = useState(false);
   const [product, setProduct] = useState(null);
+  const [key, setKey] = useState('card');
 
   const handleProduct = (product) => {
     setProduct(product);
     setShowRemoveOffcanvas(true);
+  };
+
+  const handleCart = () => {
+    router.push('/orders/1');
   };
 
   return (
@@ -83,9 +92,69 @@ export default function Cart() {
             </Card.Body>
           </Card>
           <hr />
+          <Card className="shadow border-light small">
+            <Card.Header className="small">Endereço de entrega</Card.Header>
+            <Card.Body>
+              <Card.Text className="mb-0">Lorem Ipsum Dolor Sit Amet, 9999</Card.Text>
+              <Card.Text className="mb-0">Lorem Ipsum - SA</Card.Text>
+              <Card.Text className="mb-0">CEP: 99999-999</Card.Text>
+            </Card.Body>
+          </Card>
+          <hr />
+          <Card className="shadow border-light small">
+            <Card.Header className="small">Pagamento</Card.Header>
+            <Card.Body>
+              <Tabs
+                activeKey={key}
+                onSelect={(k) => setKey(k)}
+                justify
+              >
+                <Tab eventKey="card" title="Cartão">
+                  <Card className="border-top-0 rounded-top-0">
+                    <Card.Body>
+                      <FloatingLabel controlId="card" label="Selecione o modo de pagamento" className="mb-2">
+                        <Form.Select aria-label="Selecione o modo de pagamento" className="shadow border-light">
+                          <option value="debit">Débito</option>
+                          <option value="credit">Crédito</option>
+                          <option value="vr">Vale-refeição</option>
+                        </Form.Select>
+                      </FloatingLabel>
+                      <FloatingLabel controlId="card" label="Selecione a bandeira do cartão">
+                        <Form.Select aria-label="Selecione a bandeira do cartão" className="shadow border-light">
+                          <option value="master">Mastercard</option>
+                          <option value="visa">Visa</option>
+                        </Form.Select>
+                      </FloatingLabel>
+                    </Card.Body>
+                  </Card>
+                </Tab>
+                <Tab eventKey="money" title="PIX | Dinheiro">
+                  <Card className="border-top-0 rounded-top-0">
+                    <Card.Body>
+                      <FloatingLabel controlId="card" label="Selecione o modo de pagamento" className="mb-2">
+                        <Form.Select aria-label="Selecione o modo de pagamento" className="shadow border-light">
+                          <option value="pix">PIX</option>
+                          <option value="money">Dinheiro</option>
+                        </Form.Select>
+                      </FloatingLabel>
+                      <FloatingLabel controlId="money" label="Digite o valor do troco" className="shadow border-light">
+                        <Form.Control type="text" placeholder="Digite o valor do troco" disabled />
+                      </FloatingLabel>
+                    </Card.Body>
+                  </Card>
+                </Tab>
+              </Tabs>
+            </Card.Body>
+            <Card.Footer>
+              Pagamento será feito na entrega.
+            </Card.Footer>
+          </Card>
+          <hr />
           <Card className="shadow border-light mb-2">
             <Card.Header className="small">Resumo</Card.Header>
             <Card.Body>
+              <Card.Text className="mb-0">Previsão de entrega: 00:00 - 00:00.</Card.Text>
+              <hr />
               <Stack direction="horizontal" gap={2} className="justify-content-between align-items-start">
                 <Card.Text className="mb-0">Entrega</Card.Text>
                 <Card.Text className="mb-0">R$9999.99</Card.Text>
@@ -99,7 +168,7 @@ export default function Cart() {
               Deseja finalizar compra?
             </Card.Footer>
           </Card>
-          <Button variant="primary" className="w-100 shadow-lg mb-3">Finalizar compra</Button>
+          <Button variant="primary" className="w-100 shadow-lg mb-3" onClick={handleCart}>Finalizar compra</Button>
         </Container>
       </Layout>
 
