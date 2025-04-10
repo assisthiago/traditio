@@ -7,14 +7,13 @@ export const ITEM = {
 }
 
 export const ADDITIONAL = { ...ITEM }
-export const ADDITIONALS = [ADDITIONAL]
 
 export const CATEGORIES_ADDITIONALS = [
   {
     "id": 1,
     "title": "Header Title 1",
     "subtitle": "Header SubTitle 1",
-    "additionals": ADDITIONALS,
+    "additionals": [ADDITIONAL, { ...ADDITIONAL, id: 2 }],
     "show": true,
     "type": "choose one",
     "required": true,
@@ -26,8 +25,19 @@ export const CATEGORIES_ADDITIONALS = [
     "title": "Header Title 2",
     "subtitle": "Header SubTitle 2",
     "show": false,
-    "additionals": ADDITIONALS,
+    "additionals": [ADDITIONAL],
     "type": "add on",
+    "required": false,
+    "created_at": "2021-09-01T00:00:00.000Z",
+    "updated_at": "2021-09-01T00:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "title": "Header Title 3",
+    "subtitle": "Header SubTitle 3",
+    "show": false,
+    "additionals": [{ ...ADDITIONAL, id: 3 }, { ...ADDITIONAL, id: 4 }],
+    "type": "select multiple",
     "required": false,
     "created_at": "2021-09-01T00:00:00.000Z",
     "updated_at": "2021-09-01T00:00:00.000Z"

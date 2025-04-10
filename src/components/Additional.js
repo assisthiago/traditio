@@ -32,7 +32,14 @@ export default function Additional({ instance, type }) {
 
               {type === "choose one" && (
                 <>
-                  <input type="radio" name="additional" id={instance.id} value={instance.id} className="btn-check" />
+                  <input type="radio" name="additional-choose-one" id={instance.id} value={instance.id} className="btn-check" />
+                  <label className="btn btn-outline-primary btn-lg" for={instance.id}></label>
+                </>
+              )}
+
+              {type === "select multiple" && (
+                <>
+                  <input type="checkbox" name="additional-select-multiple" id={instance.id} value={instance.id} className="btn-check" />
                   <label className="btn btn-outline-primary btn-lg" for={instance.id}></label>
                 </>
               )}
