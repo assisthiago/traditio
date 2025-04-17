@@ -5,6 +5,9 @@ import { Button, Card, Container, FloatingLabel, Form, Image, InputGroup, Stack 
 import Categories from "@/components/Categories";
 
 import { PRODUCTS } from '@/fixtures/models';
+import { useEffect, useState } from "react";
+import { getProducts } from "@/api/requests/products";
+import { getAdditionalCategories } from "@/api/requests/additionalCategories";
 
 export default function Product() {
   const logged = true;
@@ -14,14 +17,34 @@ export default function Product() {
 
   const instance = PRODUCTS[0];
 
+  const [product, setProduct] = useState({});
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    if (id) {
+      getProducts(id)
+        .then(response => {
+          setProduct(response.data);
+          getAdditionalCategories({ query: { product: id } })
+            .then(response => {
+              setCategories(response.data);
+            })
+            .catch(error => console.error(error));
+        })
+        .catch(error => console.error(error));
+    }
+  }, [id]);
+
   return (
     <Layout logged={logged} currentPage="products">
       <Container fluid>
-        <Image src="https://placehold.co/1000" alt={instance.name} rounded fluid className="shadow-sm" />
-        <h1 className="my-2 display-5">{instance.name}</h1>
-        <p className="text-muted">{instance.description}</p>
+        <Image src={product.image} alt={product.name} rounded fluid className="shadow-sm" />
+        <h1 className="my-2 display-5">{product.name}</h1>
+        <p className="text-muted">{product.description}</p>
         <hr />
-        <Categories categories={instance.categories} module="detail" />
+        {categories.length > 0 && (
+          <Categories categories={categories} module="detail" />
+        )}
         <Card>
           <Card.Body>
             <FloatingLabel

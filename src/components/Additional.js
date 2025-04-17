@@ -9,7 +9,7 @@ export default function Additional({ instance, type }) {
             <Stack direction="horizontal" gap={3} className="justify-content-between">
 
               {instance?.image && (
-                <div className="position-relative">
+                <div className="position-relative w-90px">
                   <Image src={instance.image} alt={instance.name} rounded fluid />
                 </div>
               )}
@@ -33,14 +33,14 @@ export default function Additional({ instance, type }) {
               {type === "choose one" && (
                 <>
                   <input type="radio" name="additional-choose-one" id={instance.id} value={instance.id} className="btn-check" />
-                  <label className="btn btn-outline-primary btn-lg" for={instance.id}></label>
+                  <label className="btn btn-outline-primary btn-lg" htmlFor={instance.id}></label>
                 </>
               )}
 
               {type === "select multiple" && (
                 <>
                   <input type="checkbox" name="additional-select-multiple" id={instance.id} value={instance.id} className="btn-check" />
-                  <label className="btn btn-outline-primary btn-lg" for={instance.id}></label>
+                  <label className="btn btn-outline-primary btn-lg" htmlFor={instance.id}></label>
                 </>
               )}
 

@@ -4,6 +4,7 @@ import Additional from "./Additional";
 import Product from "./Product";
 
 export default function Categories({ categories, module }) {
+
   return (
     <>
       {module === 'index' && (
@@ -27,7 +28,7 @@ export default function Categories({ categories, module }) {
 
       {module === 'detail' && (
         <Accordion defaultActiveKey={
-          categories.map(category => { if (category.show) return category.id })
+          categories.filter(category => category.show).map(c => c.id)
         } alwaysOpen className='shadow-sm mb-3'>
           {categories.map((category, i) => (
             <Accordion.Item eventKey={category.id} key={i}>
@@ -37,22 +38,12 @@ export default function Categories({ categories, module }) {
                     <span className="small fw-bold">{category.title}</span>
                     <span className='text-muted small'>{category.subtitle}</span>
                   </Stack>
-                  {category.required && (
-                    <Badge
-                      bg="warning"
-                      className="small position-absolute top-50 end-50px translate-middle-y text-black shadow"
-                    >
-                      Obrigatório
-                    </Badge>
-                  )}
-                  {!category.required && (
-                    <Badge
-                      bg="light"
-                      className="small position-absolute top-50 end-50px translate-middle-y text-black shadow"
-                    >
-                      Opcional
-                    </Badge>
-                  )}
+                  <Badge
+                    bg={category.required ? "warning" : "light"}
+                    className="small position-absolute top-0 end-0 translate-middle-y text-black shadow"
+                  >
+                    {category.required ? "Obrigatório" : "Opcional"}
+                  </Badge>
                 </Stack>
               </Accordion.Header>
               <Accordion.Body>
