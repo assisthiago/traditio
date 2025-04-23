@@ -8,7 +8,7 @@ import Categories from '@/components/Categories';
 import { getProductCategories } from '@/api/requests/productCategories';
 
 export default function Index() {
-  const logged = true;
+  const logged = false;
 
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);

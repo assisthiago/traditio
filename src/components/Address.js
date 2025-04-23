@@ -7,14 +7,19 @@ import ButtonSpinner from "./ButtonSpinner";
 
 import { getZipCode } from '@/api/requests/addresses';
 
-export default function Address({ show, setShow }) {
+export default function Address({
+  address,
+  setAddress,
+  show,
+  setShow,
+  logged = false
+}) {
 
-  // States
+  // States and Effect
   const [loading, setLoading] = useState(false);
   const [btnSearchDisabled, setBtnSearchDisabled] = useState(true);
   const [btnSaveDisabled, setBtnSaveDisabled] = useState(true);
   const [formDisabled, setFormDisabled] = useState(true);
-
   const [alertOptions, setAlertOptions] = useState({
     title: "",
     message: "",
@@ -22,17 +27,13 @@ export default function Address({ show, setShow }) {
     show: false,
   });
 
-  const [address, setAddress] = useState({
-    zip_code: "",
-    street: "",
-    number: "",
-    complement: "",
-    neighborhood: "",
-    city: "",
-    state: "",
-    reference: "",
-    feedbacks: {},
-  });
+  useEffect(() => {
+    if (address?.zip_code !== "" && btnSearchDisabled && btnSaveDisabled && formDisabled) {
+      setBtnSearchDisabled(false);
+      setBtnSaveDisabled(false);
+      setFormDisabled(false);
+    }
+  }, [address]);
 
   // Functions
   function feedback(field, condition, message = null) {
@@ -40,7 +41,7 @@ export default function Address({ show, setShow }) {
     setAddress({
       ...address,
       feedbacks: {
-        ...address.feedbacks,
+        ...address?.feedbacks,
         [field]: message !== null ? message : condition,
       },
     });
@@ -53,7 +54,7 @@ export default function Address({ show, setShow }) {
     setLoading(true);
     setFormDisabled(true);
 
-    getZipCode(address.zip_code)
+    getZipCode(address?.zip_code)
       .then(response => {
         const data = response.data;
         setAddress({
@@ -82,6 +83,16 @@ export default function Address({ show, setShow }) {
       });
   }
 
+  function handleSubmitAddress(e) {
+    e.preventDefault();
+
+    if (!logged) {
+      localStorage.setItem("address", JSON.stringify({ ...address }));
+      setShow(false);
+      return;
+    }
+  }
+
   // Validation
   function validateField(field, value, required = true) {
     if (required) feedback(field, value === "");
@@ -92,8 +103,12 @@ export default function Address({ show, setShow }) {
         }
     }
     const requiredFields = ["zip_code", "street", "number", "neighborhood", "city", "state"];
-    const condition = requiredFields.every(field => !address.feedbacks[field]);
-    setBtnSaveDisabled(condition);
+    const missingFields = requiredFields.filter(key => address[key] === "");
+    if (missingFields.length >= 1) setBtnSaveDisabled(true);
+    else {
+      setBtnSaveDisabled(false);
+      setAddress({ ...address, feedbacks: {} });
+    }
   }
 
   return (
@@ -116,15 +131,15 @@ export default function Address({ show, setShow }) {
                 placeholder="Digite apenas os 8 números"
                 minLength={8}
                 maxLength={8}
-                value={address.zip_code}
+                value={address?.zip_code}
                 onChange={(e) => setAddress({ ...address, zip_code: e.target.value })}
                 onBlur={(e) => validateField("zip_code", e.target.value)}
                 disabled={loading}
-                isInvalid={address.feedbacks?.zip_code ? true : false}
+                isInvalid={address?.feedbacks?.zip_code ? true : false}
               />
-              {address.feedbacks?.zip_code && (
+              {address?.feedbacks?.zip_code && (
                 <Form.Control.Feedback type="invalid">
-                  {address.feedbacks.zip_code}
+                  {address?.feedbacks.zip_code}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
@@ -142,22 +157,22 @@ export default function Address({ show, setShow }) {
           <hr />
 
           {/* Address */}
-          <Form>
+          <Form onSubmit={handleSubmitAddress}>
             <Form.Group className="mb-3">
               <Form.Label className="required">Endereço</Form.Label>
               <Form.Control
                 required
                 type="text"
                 placeholder="Endereço"
-                value={address.street}
+                value={address?.street}
                 onChange={(e) => setAddress({ ...address, street: e.target.value })}
                 onBlur={(e) => validateField("street", e.target.value)}
                 disabled={formDisabled || loading}
-                isInvalid={address.feedbacks?.street ? true : false}
+                isInvalid={address?.feedbacks?.street ? true : false}
               />
-              {address.feedbacks?.street && (
+              {address?.feedbacks?.street && (
                 <Form.Control.Feedback type="invalid">
-                  {address.feedbacks.street}
+                  {address?.feedbacks.street}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
@@ -169,15 +184,15 @@ export default function Address({ show, setShow }) {
                     required
                     type="text"
                     placeholder="Número"
-                    value={address.number}
+                    value={address?.number}
                     onChange={(e) => setAddress({ ...address, number: e.target.value })}
                     onBlur={(e) => validateField("number", e.target.value)}
                     disabled={formDisabled || loading}
-                    isInvalid={address.feedbacks?.number ? true : false}
+                    isInvalid={address?.feedbacks?.number ? true : false}
                   />
-                  {address.feedbacks?.number && (
+                  {address?.feedbacks?.number && (
                     <Form.Control.Feedback type="invalid">
-                      {address.feedbacks.number}
+                      {address?.feedbacks.number}
                     </Form.Control.Feedback>
                   )}
                 </Form.Group>
@@ -188,7 +203,7 @@ export default function Address({ show, setShow }) {
                   <Form.Control
                     type="text"
                     placeholder="BL 00, APTO 0000"
-                    value={address.complement}
+                    value={address?.complement}
                     onChange={(e) => setAddress({ ...address, complement: e.target.value })}
                     disabled={formDisabled || loading}
                   />
@@ -202,15 +217,15 @@ export default function Address({ show, setShow }) {
                 required
                 type="text"
                 placeholder="Bairro"
-                value={address.neighborhood}
+                value={address?.neighborhood}
                 onChange={(e) => setAddress({ ...address, neighborhood: e.target.value })}
                 onBlur={(e) => validateField("neighborhood", e.target.value)}
                 disabled={formDisabled || loading}
-                isInvalid={address.feedbacks?.neighborhood ? true : false}
+                isInvalid={address?.feedbacks?.neighborhood ? true : false}
               />
-              {address.feedbacks?.neighborhood && (
+              {address?.feedbacks?.neighborhood && (
                 <Form.Control.Feedback type="invalid">
-                  {address.feedbacks.neighborhood}
+                  {address?.feedbacks.neighborhood}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
@@ -222,15 +237,15 @@ export default function Address({ show, setShow }) {
                     required
                     type="text"
                     placeholder="Cidade"
-                    value={address.city}
+                    value={address?.city}
                     onChange={(e) => setAddress({ ...address, city: e.target.value })}
                     onBlur={(e) => validateField("city", e.target.value)}
                     disabled={formDisabled || loading}
-                    isInvalid={address.feedbacks?.city ? true : false}
+                    isInvalid={address?.feedbacks?.city ? true : false}
                   />
-                  {address.feedbacks?.city && (
+                  {address?.feedbacks?.city && (
                     <Form.Control.Feedback type="invalid">
-                      {address.feedbacks.city}
+                      {address?.feedbacks.city}
                     </Form.Control.Feedback>
                   )}
                 </Form.Group>
@@ -244,15 +259,15 @@ export default function Address({ show, setShow }) {
                     placeholder="Estado"
                     minLength={2}
                     maxLength={2}
-                    value={address.state}
+                    value={address?.state}
                     onChange={(e) => setAddress({ ...address, state: e.target.value })}
                     onBlur={(e) => validateField("state", e.target.value)}
                     disabled={formDisabled || loading}
-                    isInvalid={address.feedbacks?.state ? true : false}
+                    isInvalid={address?.feedbacks?.state ? true : false}
                   />
-                  {address.feedbacks?.state && (
+                  {address?.feedbacks?.state && (
                     <Form.Control.Feedback type="invalid">
-                      {address.feedbacks.state}
+                      {address?.feedbacks.state}
                     </Form.Control.Feedback>
                   )}
                 </Form.Group>
@@ -265,7 +280,7 @@ export default function Address({ show, setShow }) {
                 type="text"
                 as="textarea"
                 placeholder="Próximo ao mercado, ponto de ônibus, etc."
-                value={address.reference}
+                value={address?.reference}
                 onChange={(e) => setAddress({ ...address, reference: e.target.value })}
                 disabled={formDisabled || loading}
               />

@@ -42,6 +42,10 @@ p.text-ellipsis::after {
     width: 90px !important;
 }
 
+.w-250px {
+    width: 250px !important;
+}
+
 div.progress.text-black>div.progress-bar {
     color: black !important;
 }
