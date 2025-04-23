@@ -34,6 +34,10 @@ p.text-ellipsis::after {
     right: 50px !important;
 }
 
+.w-90 {
+    width: 90% !important;
+}
+
 .w-90px {
     width: 90px !important;
 }
@@ -49,4 +53,13 @@ div.progress.text-black>div.progress-bar {
     /* Center the image within the element */
     height: 100px;
     width: 100px;
+}
+
+label.required {
+    font-weight: bold;
+}
+
+label.optional::after {
+    content: " (opcional)";
+    font-weight: normal;
 }
