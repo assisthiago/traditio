@@ -8,8 +8,6 @@ import OrderDetail from "@/components/OrderDetail";
 import { ORDERS } from "@/fixtures/models";
 
 export default function Order() {
-  const logged = true;
-
   const router = useRouter();
   const { id } = router.query;
 
@@ -34,7 +32,7 @@ export default function Order() {
 
   return (
     <>
-      <Layout logged={logged} currentPage="orders">
+      <Layout currentPage="orders">
         <Container fluid>
           <ProgressBar
             now={100}

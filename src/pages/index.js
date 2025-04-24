@@ -8,8 +8,6 @@ import Categories from '@/components/Categories';
 import { getProductCategories } from '@/api/requests/productCategories';
 
 export default function Index() {
-  const logged = false;
-
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
 
@@ -31,7 +29,7 @@ export default function Index() {
   }, [categories]);
 
   return (
-    <Layout logged={logged} currentPage="products">
+    <Layout currentPage="products">
       <Container fluid>
         <Categories categories={categories} module="index" loading={loading} />
       </Container>

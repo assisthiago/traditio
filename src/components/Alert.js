@@ -25,13 +25,23 @@ export default function Alert({ options, setOptions }) {
     <ReactAlert
       show={show}
       variant={variant}
-      className="position-fixed top-0 start-50 translate-middle-x w-90 shadow-lg mt-3" style={{ zIndex: 1050 }}
+      className="position-fixed top-0 start-50 translate-middle-x w-90 shadow-lg mt-3" style={{ zIndex: 9999 }}
       onClose={() => setOptions({ ...options, show: false })}
       dismissible
     >
-      <ReactAlert.Heading className="fs-6 m-0">{getIcon(variant)}{title}</ReactAlert.Heading>
-      <hr className="mb-2" />
-      <p className="m-0 d-flex align-items-center">{message}</p>
+      {title ? (
+        <>
+          <ReactAlert.Heading className="fs-6 m-0">
+            {getIcon(variant)}{title}
+          </ReactAlert.Heading>
+          <hr className="mb-2" />
+          <p className="m-0 d-flex align-items-center">{message}</p>
+        </>
+      ) : (
+        <p className="m-0 d-flex align-items-center">
+          {getIcon(variant)}{message}
+        </p>
+      )}
     </ReactAlert>
   )
 }

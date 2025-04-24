@@ -288,7 +288,6 @@ export default function Address({
 
             <ButtonSpinner
               text="Salvar"
-              icon={<FloppyFill className="me-2" />}
               loading={loading}
               customDisabled={btnSaveDisabled}
               variant="primary"

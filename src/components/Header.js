@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge, Button, Container, Navbar, Stack } from "react-bootstrap"
 import { GeoAlt, GeoAltFill, Person, PersonFill } from "react-bootstrap-icons"
 

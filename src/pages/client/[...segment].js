@@ -6,14 +6,13 @@ import { useRouter } from "next/router";
 import { PersonFillCheck, PersonFillExclamation } from "react-bootstrap-icons";
 
 export default function Client() {
-  const logged = true;
 
   const router = useRouter();
   const { segment } = router.query;
   const [_, uid, token] = segment || [];
 
   return (
-    <Layout logged={logged} currentPage="client">
+    <Layout currentPage="client">
       <Container fluid className="pt-5 mt-5">
         <Row className="justify-content-center">
           <Col xs={12} className="text-center">

@@ -8,7 +8,6 @@ import OrderDetail from "@/components/OrderDetail";
 import { ORDERS } from "@/fixtures/models";
 
 export default function Orders() {
-  const logged = true;
   const router = useRouter();
 
   const [show, setShow] = useState(false);
@@ -51,7 +50,7 @@ export default function Orders() {
 
   return (
     <>
-      <Layout logged={logged} currentPage="orders">
+      <Layout currentPage="orders">
         <Container fluid>
           {ORDERS.map((order, index) => (
             <Card key={index} border="light" className="shadow-lg mb-3">

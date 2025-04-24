@@ -11,8 +11,6 @@ import { getAdditionalCategories } from "@/api/requests/additionalCategories";
 import { ProductPlaceholder } from "@/components/Placeholders";
 
 export default function Product() {
-  const logged = true;
-
   const router = useRouter();
   const { id } = router.query;
 
@@ -46,7 +44,7 @@ export default function Product() {
   }, [id]);
 
   return (
-    <Layout logged={logged} currentPage="products">
+    <Layout currentPage="products">
       <Container fluid>
         {loading ? (
           <ProductPlaceholder />

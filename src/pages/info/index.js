@@ -4,12 +4,10 @@ import { Container, Tabs, Tab, ListGroup } from "react-bootstrap";
 import Layout from "@/components/Layout";
 
 export default function Info() {
-  const logged = true;
-
   const [key, setKey] = useState('about');
 
   return (
-    <Layout logged={logged} currentPage="info">
+    <Layout currentPage="info">
       <Container fluid>
         <Tabs
           activeKey={key}

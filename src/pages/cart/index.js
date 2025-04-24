@@ -10,7 +10,6 @@ import { TicketPerforatedFill } from "react-bootstrap-icons";
 import { useRouter } from "next/navigation";
 
 export default function Cart() {
-  const logged = true;
   const router = useRouter()
 
   const [showRemoveOffcanvas, setShowRemoveOffcanvas] = useState(false);
@@ -29,7 +28,7 @@ export default function Cart() {
 
   return (
     <>
-      <Layout logged={logged} currentPage="cart">
+      <Layout currentPage="cart">
         <Container fluid>
           {CART.products.map((product, i) => (
             <Card key={i} border="light" className="shadow-lg mb-3">
