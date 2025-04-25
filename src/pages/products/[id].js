@@ -29,16 +29,12 @@ export default function Product() {
             })
             .catch(error => console.error(error))
             .finally(() => {
-              setTimeout(() => {
-                setLoading(false);
-              }, 1000);
+              setLoading(false);
             });
         })
         .catch(error => console.error(error))
         .finally(() => {
-          setTimeout(() => {
-            setLoading(false);
-          }, 1000);
+          setLoading(false);
         });
     }
   }, [id]);

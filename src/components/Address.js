@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Offcanvas, Row } from "react-bootstrap";
-import { FloppyFill, Search } from "react-bootstrap-icons";
+import { Search } from "react-bootstrap-icons";
 
 import Alert from "./Alert";
 import ButtonSpinner from "./ButtonSpinner";
@@ -53,6 +53,7 @@ export default function Address({
 
     setLoading(true);
     setFormDisabled(true);
+    setAddress({ ...address, number: "" });
 
     getZipCode(address?.zip_code)
       .then(response => {
@@ -76,10 +77,8 @@ export default function Address({
         });
       })
       .finally(() => {
-        setTimeout(() => {
-          setLoading(false);
-          setFormDisabled(false);
-        }, 1000);
+        setLoading(false);
+        setFormDisabled(false);
       });
   }
 

@@ -10,25 +10,15 @@ export default function Header({ logged = false }) {
 
   const [showAccount, setShowAccount] = useState(false);
   const [showAddress, setShowAddress] = useState(false);
-  const [address, setAddress] = useState({
-    zip_code: "",
-    street: "",
-    number: "",
-    complement: "",
-    neighborhood: "",
-    city: "",
-    state: "",
-    reference: "",
-    feedbacks: {},
-  });
+  const [address, setAddress] = useState(null);
 
   useEffect(() => {
     if (logged) {
       // Chamar a API
     }
-    else if (!address?.zip_code && !logged) {
+    else if (!address && !logged) {
       const _address = localStorage.getItem("address");
-      if (address) setAddress(JSON.parse(_address));
+      setAddress(JSON.parse(_address));
     }
   }, [address]);
 
