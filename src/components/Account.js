@@ -30,8 +30,8 @@ export default function Settings({ show, setShow }) {
   });
 
   useEffect(() => {
-    if (user?.id === "") {
-      const _user = localStorage.getItem("user");
+    const _user = localStorage.getItem("user");
+    if (user?.id === "" && _user) {
       setUser({ ...user, ...JSON.parse(_user) });
     }
   })

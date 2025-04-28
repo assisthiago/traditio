@@ -67,3 +67,7 @@ label.optional::after {
     content: " (opcional)";
     font-weight: normal;
 }
+
+#footer button.btn.active {
+    font-weight: bold;
+}

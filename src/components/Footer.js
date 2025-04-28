@@ -5,7 +5,7 @@ import { BagFill, InfoCircleFill, Clipboard2Fill, Bag, CollectionFill } from "re
 export default function Footer({ logged = false, currentPage = "products", productsInCart = 0 }) {
 
   return (
-    <Navbar fixed="bottom" className="bg-white flex-column py-0 shadow-lg">
+    <Navbar fixed="bottom" className="bg-white flex-column py-0 shadow-lg" id="footer">
       <Container fluid className="py-1">
         <Stack direction="horizontal" className="justify-content-around w-100">
           <Button
@@ -36,7 +36,6 @@ export default function Footer({ logged = false, currentPage = "products", produ
             size="sm"
             className="text-decoration-none"
             active={currentPage === 'cart'}
-            disabled={!logged}
           >
             <Link href="/cart" className="text-decoration-none">
               {productsInCart == 0 ? (

@@ -4,7 +4,26 @@ import Additional from "./Additional";
 import Product from "./Product";
 import { CategoriesPlaceholder } from "./Placeholders";
 
-export default function Categories({ categories, module, loading }) {
+export default function Categories({
+  categories,
+  module,
+  loading,
+}) {
+
+  // Functions
+  const translateType = (type) => {
+    switch (type) {
+      case 'choose one':
+        return 'Escolha uma opção.';
+      case 'select multiple':
+        return 'Selecione várias opções.';
+      case 'add on':
+        return 'Adicione mais.';
+      default:
+        return '';
+    }
+  }
+
 
   return (
     <>
@@ -42,19 +61,27 @@ export default function Categories({ categories, module, loading }) {
                       <Stack direction='vertical' gap={0}>
                         <span className="small fw-bold">{category.title}</span>
                         <span className='text-muted small'>{category.subtitle}</span>
+                        <span className='text-muted small mt-2'>{translateType(category.type)}</span>
                       </Stack>
-                      <Badge
-                        bg={category.required ? "warning" : "light"}
-                        className="small position-absolute top-0 end-0 translate-middle-y text-black shadow"
-                      >
-                        {category.required ? "Obrigatório" : "Opcional"}
-                      </Badge>
+                      {category.required && (
+                        <Badge
+                          bg={category.required ? "warning" : "light"}
+                          className="small position-absolute top-0 end-0 translate-middle-y text-black shadow"
+                        >Obrigatório</Badge>
+                      )}
                     </Stack>
                   </Accordion.Header>
                   <Accordion.Body>
                     {category.additionals.map((additional, j, row) => (
                       <div key={j} className={'mb-' + (j === row.length - 1 ? '0' : '3')}>
-                        <Additional instance={additional} type={category.type} />
+                        <Additional
+                          category={{
+                            id: category.id,
+                            type: category.type,
+                            required: category.required,
+                          }}
+                          instance={additional}
+                        />
                       </div>
                     ))}
                   </Accordion.Body>
