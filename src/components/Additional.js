@@ -3,28 +3,97 @@ import { Button, Card, Col, Form, Image, InputGroup, Stack } from "react-bootstr
 
 export default function Additional({
   category,
-  instance,
+  additional,
+  additionals = [],
+  setAdditionals = () => { },
 }) {
 
   // State and Effect
-  const [item, setItem] = useState({ id: "", value: "", quantity: 1 });
+  const [item, setItem] = useState({ id: "", value: false, quantity: 0 });
 
   useEffect(() => {
-    if (!item.id) {
+    // Update the item state with the additional's value
+    if (item.id === "")
       setItem({
-        id: instance.id,
-        value: category.type === 'add on' ? 0 : "",
-        quantity: 1,
+        ...additional,
+        value: false,
+        quantity: 0,
+        category: category.id
       });
-    }
-  }, [instance]);
+  }, [additional]);
 
-  // Functions
-  const updateAddOnValue = (action) => {
-    if (action === "decrement" && item.value >= 1)
-      setItem({ ...item, value: item.value - 1 });
-    else if (action === "increment")
-      setItem({ ...item, value: item.value + 1 });
+  // Handlers
+  const handleAddOn = (action) => {
+    let quantity = item.quantity;
+
+    // Update the item's quantity based on the action
+    if (action === "decrement" && item.quantity >= 1) quantity -= 1;
+    else if (action === "increment") quantity += 1;
+
+    setItem({ ...item, value: quantity >= 1 ? true : false, quantity: quantity });
+
+    // Update the additionals state
+    setAdditionals([
+      ...additionals.filter(_additional => _additional.id !== item.id),
+      {
+        ...additional,
+        category: category.id,
+        value: quantity >= 1 ? true : false,
+        quantity: quantity,
+      }
+    ]);
+  };
+
+  const handleChooseOne = (e) => {
+    const { checked } = e.target;
+
+    // Update the item's value based on the radio button state
+    setItem({ ...item, value: checked });
+
+    // Update the additionals state
+    setAdditionals([
+      ...additionals.map(_additional => {
+        if (_additional.id === item.id) {
+          // Update the selected item
+          return {
+            ..._additional,
+            category: category.id,
+            value: checked,
+            quantity: checked ? 1 : 0,
+          }
+        }
+        else if (_additional.category === item.category) {
+          // Reset other items in the same category
+          return {
+            ..._additional,
+            value: false,
+            quantity: 0,
+          }
+        }
+        else {
+          // Keep other items unchanged
+          return { ..._additional }
+        }
+      })
+    ])
+  }
+
+  const handleSelecMultiple = (e) => {
+    const { checked } = e.target;
+
+    // Update the item's value based on the checkbox state
+    setItem({ ...item, value: checked });
+
+    // Update the additionals state
+    setAdditionals([
+      ...additionals.filter(_additional => _additional.id !== item.id),  // Remove the current item
+      {
+        ...item,
+        category: category.id,
+        value: checked,
+        quantity: checked ? 1 : 0,
+      }
+    ])
   };
 
   return (
@@ -34,48 +103,47 @@ export default function Additional({
           <Card.Body>
             <Stack direction="horizontal" gap={3} className="justify-content-between">
 
-              {instance?.image && (
+              {additional?.image && (
                 <div className="position-relative w-90px">
-                  <Image src={instance.image} alt={instance.name} rounded fluid />
+                  <Image src={additional.image} alt={additional.name} rounded fluid />
                 </div>
               )}
 
               <Stack direction="vertical" gap={0} className="w-90px">
-                <h5 className="mb-0 small fw-bold">{instance.name}</h5>
-                <span className="mb-0 small">R${instance.price}</span>
+                <h5 className="mb-0 small fw-bold">{additional.name}</h5>
+                <h5 className="mb-1 small fw-light">{additional.size}{additional.unit}.</h5>
+                <span className="mb-0 small">R${additional.price}</span>
 
                 {category.type === "add on" && (
                   <div className="d-flex justify-content-end">
                     <input
                       type="radio"
-                      name={`${instance.id}__add-on`}
-                      id={instance.id}
-                      value={item.value}
-                      checked={item.value > 0}
+                      name={`${additional.id}__add-on`}
+                      id={additional.id}
                       required={category.required}
                       className="btn-check"
-                      onChange={() => { }}  // Prevent default behavior
+                      onChange={() => { }}
                     />
-                    <label className="invisible" htmlFor={instance.id}></label>
+                    <label className="invisible" htmlFor={additional.id}></label>
 
                     <InputGroup className="w-90px">
                       <Button
                         variant="light"
                         size="sm"
-                        onClick={() => updateAddOnValue("decrement")}>-</Button>
+                        onClick={() => handleAddOn("decrement")}>-</Button>
                       <Form.Control
                         type="number"
                         size="sm"
                         className="border-light text-center"
-                        value={item.value}
-                        name={`${instance.id}__add-on-number`}
+                        value={item.quantity}
+                        name={`${additional.id}__add-on-number`}
+                        onChange={() => { }}
                         readOnly
-                        onChange={() => { }}  // Prevent default behavior
                       />
                       <Button
                         variant="primary"
                         size="sm"
-                        onClick={() => updateAddOnValue("increment")}>+</Button>
+                        onClick={() => handleAddOn("increment")}>+</Button>
                     </InputGroup>
                   </div>
                 )}
@@ -83,31 +151,27 @@ export default function Additional({
               </Stack>
 
               {category.type === "choose one" && (
-                <>
-                  <input
-                    type="radio"
-                    name={`${category.id}__choose-one`}
-                    id={instance.id}
-                    value={instance.id}
-                    required={category.required}
-                    className="btn-check"
-                  />
-                  <label className="btn btn-outline-primary btn-lg" htmlFor={instance.id}></label>
-                </>
+                <Form.Check
+                  type="switch"
+                  name={`${category.id}__choose-one`}
+                  id={additional.id}
+                  value={additionals.find(_additional => _additional.id === item.id)?.value}
+                  checked={additionals.find(_additional => _additional.id === item.id)?.value}
+                  required={category.required}
+                  onChange={handleChooseOne}
+                />
               )}
 
               {category.type === "select multiple" && (
-                <>
-                  <input
-                    type="checkbox"
-                    name={`${category.id}__select-multiple`}
-                    id={instance.id}
-                    value={instance.id}
-                    required={category.required}
-                    className="btn-check"
-                  />
-                  <label className="btn btn-outline-primary btn-lg" htmlFor={instance.id}></label>
-                </>
+                <Form.Check
+                  type="switch"
+                  name={`${category.id}__select-multiple`}
+                  id={additional.id}
+                  value={additionals.find(_additional => _additional.id === item.id)?.value}
+                  checked={additionals.find(_additional => _additional.id === item.id)?.value}
+                  required={category.required}
+                  onChange={handleSelecMultiple}
+                />
               )}
 
             </Stack>

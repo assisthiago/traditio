@@ -43,7 +43,7 @@ export default function Header({ logged = false }) {
             >
               {!address?.zip_code ? (<GeoAlt size={15} />) : (<GeoAltFill size={15} />)}
               <span className="ms-1 fw-light text-truncate">
-                {!address?.zip_code ? ("Encontre seu endereço") : (`${address.neighborhood}, ${address.city}`)}
+                {!address?.zip_code || address?.zip_code === undefined ? ("Encontre seu endereço") : (`${address.neighborhood}, ${address.city}`)}
               </span>
             </Button>
             <Button variant="link" size="sm" onClick={() => setShowAccount(true)}>

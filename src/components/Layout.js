@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { use, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Footer from "./Footer";
 import Header from "./Header";
@@ -7,7 +7,8 @@ import Header from "./Header";
 
 export default function Layout({ children, currentPage }) {
   const logged = false;
-  const productsInCart = 0;
+
+  const [productsInCart, setProductsInCart] = useState(0);
 
   useEffect(() => {
     if (localStorage.getItem("order") === null) {
@@ -25,7 +26,13 @@ export default function Layout({ children, currentPage }) {
         total: null,
       }));
     }
-
+    else {
+      const _order = localStorage.getItem("order");
+      if (_order) {
+        const order = JSON.parse(_order);
+        setProductsInCart(order.products.length);
+      }
+    }
 
     // Check if the user is logged in
     const token = localStorage.getItem('token');

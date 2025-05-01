@@ -8,6 +8,8 @@ export default function Categories({
   categories,
   module,
   loading,
+  additionals = [],
+  setAdditionals = () => { },
 }) {
 
   // Functions
@@ -80,7 +82,9 @@ export default function Categories({
                             type: category.type,
                             required: category.required,
                           }}
-                          instance={additional}
+                          additional={additional}
+                          additionals={additionals}
+                          setAdditionals={setAdditionals}
                         />
                       </div>
                     ))}
