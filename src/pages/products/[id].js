@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { Button, Card, Container, FloatingLabel, Form, Image, InputGroup, Modal, Stack } from "react-bootstrap";
+import { Button, Card, Container, FloatingLabel, Form, Image, InputGroup, Stack } from "react-bootstrap";
 
 import Layout from "@/components/Layout";
 import Categories from "@/components/Categories";
@@ -16,7 +16,6 @@ export default function Product() {
   const { id } = router.query;
 
   // State and Effect
-  const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState({});
   const [categories, setCategories] = useState([]);
@@ -39,7 +38,7 @@ export default function Product() {
             name: response.data.name,
             price: response.data.price,
           })
-          getAdditionalCategories({ query: { product: id } })
+          getAdditionalCategories({ query: { products: id } })
             .then(response => {
               setCategories(response.data);
               setAdditionals(response.data.map(
@@ -88,6 +87,7 @@ export default function Product() {
   // Handlers
   const handleAddToCart = (e) => {
     e.preventDefault();
+
     const orderData = {
       ...order,
       price: getOrderPrice(),
@@ -99,29 +99,26 @@ export default function Product() {
     _order.products = _order.products ? [..._order.products, orderData] : [orderData];
     localStorage.setItem("order", JSON.stringify(_order));
 
-    if (_order.products.length > 2) setShow(true);
+    router.push("/");
   };
+
+  const handleAddToCartDisabled = () => {
+    let requiredCategories = categories
+      .filter(category => category.required)
+      .map(category => { return { category: category.id, value: false } });
+
+    const readyToAdd = requiredCategories.map(category => {
+      return additionals
+        .filter(additional => additional.category === category.category)
+        .some(additional => additional.value)
+        ? true : false;
+    });
+
+    return !readyToAdd.every(value => value === true);
+  }
 
   return (
     <>
-      <Modal show={show} onHide={() => setShow(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title className="text-center" closeButton>
-            Adicionar ao carrinho
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Deseja continuar adicionando mais produtos ou seguir para o carrinho?</p>
-          <Modal.Footer className="d-flex justify-content-between">
-            <Button variant="outline-secondary" onClick={() => { setShow(false); router.push("/") }}>
-              Adicionar
-            </Button>
-            <Button variant="primary" onClick={() => { setShow(false); router.push("/cart") }}>
-              Seguir para o carrinho
-            </Button>
-          </Modal.Footer>
-        </Modal.Body>
-      </Modal>
       <Layout currentPage="products">
         <Container fluid>
           <Form onSubmit={handleAddToCart}>
@@ -196,7 +193,9 @@ export default function Product() {
                 <Button
                   variant="primary"
                   type="submit"
-                  className="w-100 shadow-lg d-flex justify-content-center align-items-center mb-3">
+                  className="w-100 shadow-lg d-flex justify-content-center align-items-center mb-3"
+                  disabled={handleAddToCartDisabled()}
+                >
                   <BagPlusFill size={20} className="me-1" />
                   Adicionar
                 </Button>

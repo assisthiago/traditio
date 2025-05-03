@@ -30,7 +30,7 @@ export default function Layout({ children, currentPage }) {
       const _order = localStorage.getItem("order");
       if (_order) {
         const order = JSON.parse(_order);
-        setProductsInCart(order.products.length);
+        setProductsInCart(order?.products?.length);
       }
     }
 

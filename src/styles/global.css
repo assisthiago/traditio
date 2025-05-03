@@ -71,3 +71,9 @@ label.optional::after {
 #footer button.btn.active {
     font-weight: bold;
 }
+
+.badge-category-position {
+    transform: rotate(90deg);
+    right: -35px;
+    font-size: 0.6rem !important;
+}

@@ -59,18 +59,18 @@ export default function Categories({
               {categories.map((category, i) => (
                 <Accordion.Item eventKey={category.id} key={i}>
                   <Accordion.Header className='bg-gradient sticky shadow z-3'>
+                    {category.required && (
+                      <Badge
+                        bg={category.required ? "warning" : "light"}
+                        className="position-absolute badge-category-position text-black shadow"
+                      >Obrigatório</Badge>
+                    )}
                     <Stack direction="horizontal" gap={3} className="justify-content-between">
                       <Stack direction='vertical' gap={0}>
                         <span className="small fw-bold">{category.title}</span>
                         <span className='text-muted small'>{category.subtitle}</span>
                         <span className='text-muted small mt-2'>{translateType(category.type)}</span>
                       </Stack>
-                      {category.required && (
-                        <Badge
-                          bg={category.required ? "warning" : "light"}
-                          className="small position-absolute top-0 end-0 translate-middle-y text-black shadow"
-                        >Obrigatório</Badge>
-                      )}
                     </Stack>
                   </Accordion.Header>
                   <Accordion.Body>

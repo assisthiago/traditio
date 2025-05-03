@@ -114,22 +114,14 @@ export default function Additional({
                 <h5 className="mb-1 small fw-light">{additional.size}{additional.unit}.</h5>
                 <span className="mb-0 small">R${additional.price}</span>
 
-                {category.type === "add on" && (
-                  <div className="d-flex justify-content-end">
-                    <input
-                      type="radio"
-                      name={`${additional.id}__add-on`}
-                      id={additional.id}
-                      required={category.required}
-                      className="btn-check"
-                      onChange={() => { }}
-                    />
-                    <label className="invisible" htmlFor={additional.id}></label>
+                <div className="d-flex justify-content-end">
 
+                  {category.type === "add on" && (
                     <InputGroup className="w-90px">
                       <Button
                         variant="light"
                         size="sm"
+                        className="z-1"
                         onClick={() => handleAddOn("decrement")}>-</Button>
                       <Form.Control
                         type="number"
@@ -143,37 +135,36 @@ export default function Additional({
                       <Button
                         variant="primary"
                         size="sm"
+                        className="z-1"
                         onClick={() => handleAddOn("increment")}>+</Button>
                     </InputGroup>
-                  </div>
-                )}
+                  )}
 
+                  {category.type === "choose one" && (
+                    <Form.Check
+                      type="switch"
+                      className="d-flex justify-content-end"
+                      name={`${category.id}__choose-one`}
+                      id={additional.id}
+                      value={additionals.find(_additional => _additional.id === item.id)?.value}
+                      checked={additionals.find(_additional => _additional.id === item.id)?.value}
+                      onChange={handleChooseOne}
+                    />
+                  )}
+
+                  {category.type === "select multiple" && (
+                    <Form.Check
+                      type="switch"
+                      name={`${category.id}__select-multiple`}
+                      id={additional.id}
+                      value={additionals.find(_additional => _additional.id === item.id)?.value}
+                      checked={additionals.find(_additional => _additional.id === item.id)?.value}
+                      onChange={handleSelecMultiple}
+                    />
+                  )}
+
+                </div>
               </Stack>
-
-              {category.type === "choose one" && (
-                <Form.Check
-                  type="switch"
-                  name={`${category.id}__choose-one`}
-                  id={additional.id}
-                  value={additionals.find(_additional => _additional.id === item.id)?.value}
-                  checked={additionals.find(_additional => _additional.id === item.id)?.value}
-                  required={category.required}
-                  onChange={handleChooseOne}
-                />
-              )}
-
-              {category.type === "select multiple" && (
-                <Form.Check
-                  type="switch"
-                  name={`${category.id}__select-multiple`}
-                  id={additional.id}
-                  value={additionals.find(_additional => _additional.id === item.id)?.value}
-                  checked={additionals.find(_additional => _additional.id === item.id)?.value}
-                  required={category.required}
-                  onChange={handleSelecMultiple}
-                />
-              )}
-
             </Stack>
           </Card.Body>
         </Card>
