@@ -1,3 +1,6 @@
+
+'use client'
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -22,6 +25,7 @@ export default function Product() {
   const [order, setOrder] = useState({
     name: "",
     price: 0,
+    total: 0,
     quantity: 1,
     additionals: [],
     observation: "",
@@ -29,14 +33,19 @@ export default function Product() {
   const [additionals, setAdditionals] = useState([]);
 
   useEffect(() => {
+    const _order = localStorage.getItem("order") ? JSON.parse(localStorage.getItem("order")) : null;
+    const lengthId = _order?.products?.length > 0 ? _order.products.length + 1 : 1;
+
     if (id) {
       getProducts(id)
         .then(response => {
           setProduct(response.data);
           setOrder({
             ...order,
+            id: lengthId,
             name: response.data.name,
-            price: response.data.price,
+            price: parseFloat(response.data.price),
+            total: parseFloat(response.data.price),
           })
           getAdditionalCategories({ query: { products: id } })
             .then(response => {
@@ -76,7 +85,7 @@ export default function Product() {
   };
 
   const getOrderPrice = () => {
-    let price = parseFloat(order.price);
+    let price = parseFloat(order.total);
     additionals.forEach(additional => {
       if (additional.value) price += parseFloat(additional.price) * additional.quantity;
     });
@@ -90,7 +99,7 @@ export default function Product() {
 
     const orderData = {
       ...order,
-      price: getOrderPrice(),
+      total: getOrderPrice(),
       additionals: additionals.filter(additional => additional.value),
     };
 
